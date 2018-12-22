@@ -1,0 +1,37 @@
+//color.scss
+@import '_color';
+
+//section welcome styling
+#section-welcome{
+    background-color:$blue;
+    color: $white;
+    padding: 5% 0%;
+    text-align: center;
+    h1{
+        font-size:48px;
+    }
+    p{
+        font-size: 24px;
+    }
+}
+
+#section-account{
+    background-color:$white;
+    color: $blue;
+    padding: 5% 0%;
+    text-align:center;
+    form{
+        text-align: left;
+    }
+    label{
+        display:inline-block;
+        
+    }
+}
+
+//Footer styling
+footer{
+    background-color: $footerBG;
+    color:$white;
+    padding: 0.5% 0%;
+}
