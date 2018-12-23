@@ -3,6 +3,7 @@
 <?php 
     include("includes/header.php"); 
     session_start();
+    
     include("includes/functions.php");
     
     //When the form is submitted
@@ -10,25 +11,30 @@
         //sanitise the data
         $name = validateFormData($_POST['name']);
         $email = validateFormData($_POST['email']);
-        $password = validateFormData($_POST['password']);
-        $confirm_password = validateFormData($_POST['password2']);
+        $password1 = validateFormData($_POST['password1']);
+        $password2 = validateFormData($_POST['password2']);
+        
         
         //connect to database
         include('includes/connection.php');
         
         //If passwords match
-        if($password == $password2){
-            $hashed_password = password_hash($password,PASSWORD_DEFAULT); //hashed
+        if($password1 == $password2){
+            $hashed_password = password_hash($password1,PASSWORD_DEFAULT); //hashed
+            
+            //query the database
             $query = "INSERT INTO users(name, email, password) VALUES('$name','$email','$hashed_password')";
             mysqli_query($conn,$query);
-            header("Location: index.php?success");
+            
+            //bring user to new page
+            header("Location: account-success.php");
         }else{
-           $errorMessage = "Error: Passwords do not match"; 
+            $errorMessage = "<div class='alert alert-danger'><strong>Error:</strong> Passwords do not match</div>";
         }
-    
-    }
     //close the connection
     mysqli_close($conn);
+    }
+   
     
 ?>
     <body>
@@ -51,7 +57,7 @@
                     <div class="col-md-6">
                         <h3>Create Account</h3>
                         <?php echo $errorMessage ?>
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                             <label>Name: </label>
                             <br>
                             <input type="text" name="name">
@@ -62,13 +68,15 @@
                             <br>
                             <label>Password: </label>
                             <br>
-                            <input type="password" name="password">
+                            <input type="password" name="password1">
                             <br>
                             <label>Confirm Password: </label>
                             <br>
                             <input type="password" name="password2">
                             <br>
-                            <input type="submit" value="Create Account" name="create_account">
+                            <small>I have read the terms and conditions.</small>
+                            <br>
+                            <input class="btn btn-primary" type="submit" value="Create Account" name="create_account">
                         </form>
                     </div>
                 </div>

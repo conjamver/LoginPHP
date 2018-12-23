@@ -15,8 +15,13 @@
   text-align: center; }
   #section-account form {
     text-align: left; }
-  #section-account label {
-    display: inline-block; }
+    #section-account form label {
+      display: inline-block;
+      font-weight: 600; }
+    #section-account form input {
+      width: 100%;
+      border-color: transparent;
+      border-radius: 6px; }
 
 footer {
   background-color: #2c3e50;

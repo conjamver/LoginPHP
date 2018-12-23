@@ -22,12 +22,18 @@
     text-align:center;
     form{
         text-align: left;
-    }
-    label{
-        display:inline-block;
-        
+        label{
+            display:inline-block;
+            font-weight: 600;
+        }
+        input{
+            width:100%;
+            border-color:transparent;
+            border-radius:6px;
+        }
     }
 }
+
 
 //Footer styling
 footer{
