@@ -19,5 +19,5 @@
     
 <!-- A grey horizontal navbar that becomes vertical on small screens -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="#">Account X Plus</a>
+        <a class="navbar-brand" href="index.php">Account X Plus</a>
     </nav>
