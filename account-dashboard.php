@@ -13,12 +13,12 @@
    
 ?>
     <body>
-        <!--INTRODUCTION -->
+        <!--Welcome Banner-->
         <section id="section-welcome">
             <div class="container">
                 <h1 class="text-center">Welcome <?php echo $_SESSION['loggedInUser_name'] ?></h1>
                 <p>Let's see what your social life is like today. </p>
-                
+                <a href="account-logout.php"><button>Logout</button></a>
             </div>
         </section>
 

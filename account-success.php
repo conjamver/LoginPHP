@@ -11,9 +11,8 @@
         <section id="section-welcome">
             <div class="container">
                 <h1 class="text-center">Your account has been succesfully created!</h1>
-                <p>Welcome to Kick On's </p>
-                <p>You can now login with your new account.</p>
-                
+                <p>Welcome <?php $_SESSION['loggedInUser_name'];?> </p>
+                <p>You can now use your new account.</p>
             </div>
         </section>
 

@@ -5,7 +5,7 @@
     include("includes/header.php"); 
     include("includes/functions.php");
     //declare variables
-   $nameErr = $errorMessage = "";
+    $email = $name = $nameErr = $errorMessage = "";
     
     //When the form is submitted
     if(isset($_POST['create_account'])){
@@ -54,8 +54,47 @@
     mysqli_close($conn);
     }
     
+    //SIGNING IN/////////
+if(isset($_POST['login_account'])){
+    //create variables
+    //wrap data with validate function
+    $user_email = validateFormData($_POST['user_email']);
+    $user_pwd = validateFormData($_POST['user_pwd']);
     
-   
+    //connect to database
+    include('includes/connection.php');
+    
+    //create query
+    $query = "SELECT name, password FROM users WHERE email = '$user_email'";
+    
+    //store result - and query database
+    $result = mysqli_query($conn, $query);
+    
+    //verify if result is returned - check if any entries
+    if(mysqli_num_rows($result) > 0 ){
+        //store variables
+        while($row = mysqli_fetch_assoc($result)){
+            $user_name = $row['name'];
+            $hashedPass = $row['password'];
+        }
+        //verify hashed password with submitted password
+        if(password_verify($user_pwd, $hashedPass)){
+            //correct login deyails
+            //if correct - store data in session varaibles
+            $_SESSION['loggedInUser_name'] = $user_name;
+            
+            //redirect user to client page
+            header("location: account-dashboard.php");
+        }else{
+            //error if hashed password no match
+            $errorMessage = "<div class='alert alert-danger'>Wrong Username/Password. Try Again.";
+        }
+    }else{//if no results in database
+         $errorMessage = "<div class='alert alert-danger'>No such user";
+    }
+    //close mysqli connection
+
+}
     
 ?>
     <body>
@@ -74,10 +113,10 @@
                     <div class="col-md-6">
                         <h3>Sign In</h3>
                         <!--FORM START -->
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                         <label>Email: </label>
                             <br>
-                            <input type="email" name="user_email" maxlength="32" value='' placeholder="Enter email here">
+                            <input type="email" name="user_email" maxlength="32" value='<?php echo $user_email?>' placeholder="Enter email here">
                             <br>
                             <label>Password: </label>
                             <input type="password" maxlength="32" name="user_pwd" placeholder="Enter password here">
@@ -96,11 +135,11 @@
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                             <label>Name: </label>
                             <br>
-                            <input type="text" name="name" maxlength="12" value='<?php echo $name; ?>'>
+                            <input type="text" name="name" maxlength="12" value='<?php echo $name; ?>' placeholder="Enter name here" >
                             <br>
                             <label>Email: </label>
                             <br>
-                            <input type="email" name="email" maxlength="32" value='<?php echo $email; ?>'>
+                            <input type="email" name="email" maxlength="32" value='<?php echo $email; ?>' placeholder="Enter email here">
                             <br>
                             <label>Password: </label>
                             <br>
