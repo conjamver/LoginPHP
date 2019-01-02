@@ -3,6 +3,12 @@
 <?php 
     session_start();
     include("includes/header.php"); 
+    
+    //restrict access if user is not logged in
+    if(!$_SESSION['loggedInUser_name']){
+        header("Location: index.php");
+    }
+    //connect database
     include("includes/functions.php");
    
 ?>
@@ -10,9 +16,8 @@
         <!--INTRODUCTION -->
         <section id="section-welcome">
             <div class="container">
-                <h1 class="text-center">Your account has been succesfully created!</h1>
-                <p>Welcome to Kick On's </p>
-                <p>You can now login with your new account.</p>
+                <h1 class="text-center">Welcome <?php echo $_SESSION['loggedInUser_name'] ?></h1>
+                <p>Let's see what your social life is like today. </p>
                 
             </div>
         </section>

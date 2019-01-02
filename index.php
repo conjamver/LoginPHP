@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php 
-    include("includes/header.php"); 
     session_start();
-    
+    include("includes/header.php"); 
     include("includes/functions.php");
     //declare variables
    $nameErr = $errorMessage = "";
@@ -34,7 +33,10 @@
             //If passwords match and have a length greater than 6
             if($password1 == $password2 && strlen($password1) > 6 ){
                 $hashed_password = password_hash($password1,PASSWORD_DEFAULT); 
-
+                
+                //set session variables and restrict access to other pages
+                $_SESSION['loggedInUser_name'] = $name;
+                
                 //query the database
                 $query = "INSERT INTO users(name, email, password) VALUES('$name','$email','$hashed_password')";
                 mysqli_query($conn,$query);
@@ -51,6 +53,8 @@
     //close the connection
     mysqli_close($conn);
     }
+    
+    
    
     
 ?>
@@ -78,6 +82,8 @@
                             <label>Password: </label>
                             <input type="password" maxlength="32" name="user_pwd" placeholder="Enter password here">
                             <br>
+                            <br>
+                            <input class="btn btn-primary" type="submit" value="Login" name="login_account">
                         </form>
                         
                     </div>

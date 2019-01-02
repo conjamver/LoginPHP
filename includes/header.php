@@ -1,4 +1,7 @@
-    <head>
+<?php 
+
+?>
+<head>
       <meta charset="utf-8"> 
       <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
@@ -18,6 +21,33 @@
     </head>
     
 <!-- A grey horizontal navbar that becomes vertical on small screens -->
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container">   
         <a class="navbar-brand" href="index.php">Account X Plus</a>
-    </nav>
+        
+        <!-- Links -->
+        <!-- If there is a session -->
+        <?php
+        if ($_SESSION['loggedInUser_name']){
+            
+            ?>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="account-dashboard.php">Welcome <?php echo $_SESSION["loggedInUser_name"]; ?></a>
+            </li>
+        </ul>
+        
+        <!-- If no session-->
+        <?php
+        }else{ ?>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">You are not logged in</a>
+            </li>
+        </ul> 
+        <?php
+        }
+        ?>
+        
+    </div> 
+</nav>
