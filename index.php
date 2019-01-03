@@ -4,8 +4,10 @@
     session_start();
     include("includes/header.php"); 
     include("includes/functions.php");
+    
     //declare variables
     $email = $name = $nameErr = $errorMessage = "";
+   
     
     //When the form is submitted
     if(isset($_POST['create_account'])){
@@ -30,21 +32,35 @@
                 $nameErr = "";
             }
             
+             //REGEX FOR PASSWORD STRENGTH
+            //one uppercase
+            $uppercase_regex = preg_match('@[A-Z]@', $password1);
+            //one lowcase
+            $lowercase_regex = preg_match('@[a-z]@', $password1);
+            //one number
+            $number_regex    = preg_match('@[0-9]@', $password1);
+            
             //If passwords match and have a length greater than 6
-            if($password1 == $password2 && strlen($password1) > 6 ){
-                $hashed_password = password_hash($password1,PASSWORD_DEFAULT); 
-                
-                //set session variables and restrict access to other pages
-                $_SESSION['loggedInUser_name'] = $name;
-                
-                //query the database
-                $query = "INSERT INTO users(name, email, password) VALUES('$name','$email','$hashed_password')";
-                mysqli_query($conn,$query);
+            if($password1 == $password2){
+                 if(!$uppercase_regex || !$lowercase_regex || !$number_regex || strlen($password1) < 8) {
+                    // tell the user something went wrong
+                     $errorMessage = "<div class='alert alert-danger'><strong>Error:</strong> Passwords should have one upperletter, one lower and a number </div>";
+                 
+                 }else{
+                    $hashed_password = password_hash($password1,PASSWORD_DEFAULT); 
 
-                //bring user to new page
-                header("Location: account-success.php");
+                    //set session variables and restrict access to other pages
+                    $_SESSION['loggedInUser_name'] = $name;
+
+                    //query the database
+                    $query = "INSERT INTO users(name, email, password) VALUES('$name','$email','$hashed_password')";
+                    mysqli_query($conn,$query);
+
+                    //bring user to new page
+                    header("Location: account-success.php");  
+                 }
             }else{
-                $errorMessage = "<div class='alert alert-danger'><strong>Error:</strong> Passwords do not match and must be more than 6 characters in length. </div>";
+                $errorMessage = "<div class='alert alert-danger'><strong>Error:</strong> Passwords do not match. </div>";
             }
     }else{
             $errorMessage = "<div class='alert alert-danger'><strong>Error:</strong> Please fill out all fields. </div>";
@@ -65,7 +81,7 @@ if(isset($_POST['login_account'])){
     include('includes/connection.php');
     
     //create query
-    $query = "SELECT name, password FROM users WHERE email = '$user_email'";
+    $query = "SELECT * FROM users WHERE email = '$user_email'";
     
     //store result - and query database
     $result = mysqli_query($conn, $query);
@@ -75,6 +91,8 @@ if(isset($_POST['login_account'])){
         //store variables
         while($row = mysqli_fetch_assoc($result)){
             $user_name = $row['name'];
+            $user_dateAdded = $row['date_added'];
+            $user_about = $row['about'];
             $hashedPass = $row['password'];
         }
         //verify hashed password with submitted password
@@ -82,6 +100,8 @@ if(isset($_POST['login_account'])){
             //correct login deyails
             //if correct - store data in session varaibles
             $_SESSION['loggedInUser_name'] = $user_name;
+            $_SESSION['loggedInUser_dateAdded'] = $user_dateAdded;
+            $_SESSION['loggedInUser_about'] = $user_about;
             
             //redirect user to client page
             header("location: account-dashboard.php");

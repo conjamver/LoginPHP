@@ -21,6 +21,19 @@
                 <a href="account-logout.php"><button>Logout</button></a>
             </div>
         </section>
+        <section>
+            <div class="container">
+            <h2>About</h2>
+            <?php 
+    //check if we have an about section otherwise display default content.
+    if(strlen($_SESSION["loggedInUser_about"]) > 0){
+            echo "<p> $_SESSION[loggedInUser_about] </p>"; 
+    }else{
+        echo "<p> No content to show.</p>";
+    }            
+            ?>
+            </div>
+        </section>
 
         <?php include("includes/footer.php"); ?>
     </body>
