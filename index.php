@@ -91,6 +91,7 @@ if(isset($_POST['login_account'])){
         //store variables
         while($row = mysqli_fetch_assoc($result)){
             $user_name = $row['name'];
+            $user_email = $row['email'];
             $user_dateAdded = $row['date_added'];
             $user_about = $row['about'];
             $hashedPass = $row['password'];
@@ -100,6 +101,7 @@ if(isset($_POST['login_account'])){
             //correct login deyails
             //if correct - store data in session varaibles
             $_SESSION['loggedInUser_name'] = $user_name;
+            $_SESSION['loggedInUser_email'] = $user_email;
             $_SESSION['loggedInUser_dateAdded'] = $user_dateAdded;
             $_SESSION['loggedInUser_about'] = $user_about;
             

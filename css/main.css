@@ -8,6 +8,16 @@
   #section-welcome p {
     font-size: 24px; }
 
+#section-content {
+  background-color: #ecf0f1;
+  color: #2d98da;
+  padding: 5% 0%;
+  text-align: left; }
+  #section-content h1 {
+    font-size: 48px; }
+  #section-content p {
+    font-size: 24px; }
+
 #section-account {
   background-color: #ecf0f1;
   color: #2d98da;

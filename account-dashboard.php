@@ -18,10 +18,10 @@
             <div class="container">
                 <h1 class="text-center">Welcome <?php echo $_SESSION['loggedInUser_name'] ?></h1>
                 <p>Let's see what your social life is like today. </p>
-                <a href="account-logout.php"><button>Logout</button></a>
+                <a href="account-logout.php"><button class="btn btn-danger">Logout</button></a>
             </div>
         </section>
-        <section>
+        <section id="section-content">
             <div class="container">
             <h2>About</h2>
             <?php 
@@ -32,7 +32,9 @@
         echo "<p> No content to show.</p>";
     }            
             ?>
+            <a href="account-editAbout.php"><button class="btn btn-primary">Edit</button></a>
             </div>
+          
         </section>
 
         <?php include("includes/footer.php"); ?>
